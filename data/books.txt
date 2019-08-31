@@ -4,6 +4,6 @@ id;title;author;issuedon
 3;God Created the Integers;Hawking, Stephen;22.12.2012
 4;Superfreakonomics;Dubner,Stephen;22.12.2013
 5;Orientalism;Said Edward;22.12.2014
-6;Nature of Statistical Learning Theory The; Vapnik, Vladimir;22.12.2015
-7;Integration of the Indian States; Menon, V P;22.12.2016
+6;Nature of Statistical Learning Theory The;Vapnik, Vladimir;22.12.2015
+7;Integration of the Indian States;Menon, V P;22.12.2016
 8;Drunkard's Walk, The;Mlodinow, Leonard;22.12.2017
