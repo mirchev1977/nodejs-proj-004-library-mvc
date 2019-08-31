@@ -1,6 +1,23 @@
 extends ../layouts/bookShop-layout
 
 block body
-    h1 Hello World
-    each book in  arrBooksData
-        h1=book.id + ' ' + book.title
+    table.all-books
+        tr
+            th
+                a( 
+                    href="?sort=title" 
+                )="Title".toUpperCase()
+            th
+                a( 
+                    href="?sort=author" 
+                )="Author".toUpperCase()
+            th
+                a( 
+                    href="?sort=issuedon" 
+                )="IssuedOn".toUpperCase()
+
+        each book in  arrBooksData
+            tr
+                td=book.title
+                td=book.author
+                td=book.issuedon
