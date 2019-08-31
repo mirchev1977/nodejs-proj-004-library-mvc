@@ -7,3 +7,5 @@ branches
 .*.sw*
 
 node_modules
+.notes*
+.swp
