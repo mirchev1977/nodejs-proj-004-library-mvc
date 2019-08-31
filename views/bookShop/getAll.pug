@@ -13,6 +13,10 @@ block body
                 )="Author".toUpperCase()
             th
                 a( 
+                    href="?sort=available" 
+                )="Available".toUpperCase()
+            th
+                a( 
                     href="?sort=issuedon" 
                 )="IssuedOn".toUpperCase()
 
@@ -20,4 +24,5 @@ block body
             tr
                 td=book.title
                 td=book.author
+                td=book.available
                 td=book.issuedon
