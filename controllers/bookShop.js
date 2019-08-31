@@ -1,3 +1,3 @@
 module.exports.getAll = ( req, res, next ) => {
-    res.render( 'test' );
+    res.render( 'bookShop/test' );
 };
