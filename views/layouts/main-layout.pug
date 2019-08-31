@@ -1,0 +1,27 @@
+block header
+    head
+        block header__title
+            title Library MVC
+        block header__static
+            link(rel="stylesheet" href="/styles/app.css" type="text/css")
+    body
+        .wrapper
+            h1 Welcome to our MVC Library
+            div.main-menu
+                ul
+                    block header__active-page
+                        a( href="/")
+                            li( class="active" ) Home
+                        a( href="/admin/new-book")
+                            li New Book
+            div.error-message#error-message
+            block body
+                h1 This is the body
+        .footer
+            div © Our MVC Library 
+                span#footer-full-year
+                span 
+                span All Rights Reserved 
+                script.
+                    var fullYear = document.getElementById( 'footer-full-year' )
+                    fullYear.innerText = new Date().getFullYear()
