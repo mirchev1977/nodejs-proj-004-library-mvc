@@ -15,7 +15,8 @@ class Book {
     }
 }
 
-module.exports.loadBookLibrary = function ( path, opt ) {
+module.exports.loadBookLibrary = loadBookLibrary;
+function loadBookLibrary ( path, opt ) {
     let allBooksStr = '';
 
     const promise = new Promise( ( resolve, reject ) => {
@@ -50,3 +51,54 @@ module.exports.loadBookLibrary = function ( path, opt ) {
 
     return promise;
 }
+
+module.exports.writeBookLibrary = writeBookLibrary;
+function writeBookLibrary ( path, arrBooksData = [] ) {
+    const promise = new Promise( ( resolve, reject ) => {
+        const _arrBookLines = [ "id;title;author;available;issuedon" ];
+        arrBooksData.forEach( _book => {
+            const _bookArr = [
+                _book[ 'id'        ],
+                _book[ 'title'     ],
+                _book[ 'author'    ],
+                _book[ 'available' ],
+                _book[ 'issuedon' ]
+            ];
+            _arrBookLines.push( _bookArr.join( ';' ) );
+        } );
+
+        const _strBookLines = _arrBookLines.join( "\n" );
+
+        fs.writeFile( path, _strBookLines, ( err ) => {
+            if ( err ) {
+                console.log( err );
+                reject( err );
+            }
+
+            resolve( arrBooksData );
+        } );
+    } );
+
+    return promise;
+}
+
+module.exports.addToCart = addToCart;
+function addToCart( path, body ) {
+    const promise = new Promise( ( resolve, reject ) => {
+        loadBookLibrary ( path, { sortBy: 'id' } ).then( _arrBooksData => {
+            _arrBooksData.forEach(_book => {
+                if ( _book[ 'id' ] === body[ 'id' ] ) {
+                    _book[ 'available' ] -= body[ 'amount' ];
+                }
+            });
+
+            writeBookLibrary( './data/books.txt', _arrBooksData ).then( _arrBooksData => {
+                resolve( _arrBooksData );
+            } ).catch( err => {
+                reject( err );
+            } );
+        } ); 
+    } );
+
+    return promise;
+};

@@ -19,6 +19,7 @@ block body
                 a( 
                     href="?sort=issuedon" 
                 )="IssuedOn".toUpperCase()
+            th Add to Cart
 
         each book in  arrBooksData
             tr
@@ -26,3 +27,9 @@ block body
                 td=book.author
                 td=book.available
                 td=book.issuedon
+                td
+                    form.add-book(method="POST" action="/add-to-cart" )
+                        input( type="hidden" name="sortBy" value=sortBy )
+                        input( type="hidden" name="id" value=book.id )
+                        input.books-amount( type="text" name="amount" placeholder="amount" )
+                        button( type="submit" ) Add
