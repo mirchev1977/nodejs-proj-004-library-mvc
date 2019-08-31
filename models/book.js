@@ -14,10 +14,7 @@ class Book {
     }
 }
 
-let promArrBooksData = loadBookLibrary();
-module.exports.promArrBooksData = promArrBooksData;
-
-function loadBookLibrary () {
+module.exports.loadBookLibrary = function ( opt ) {
     let allBooksStr = '';
 
     const promise = new Promise( ( resolve, reject ) => {
@@ -27,11 +24,19 @@ function loadBookLibrary () {
 
                 const _arrBookLines = allBooksStr.split( /\n/ )
                     .filter( line => { if ( line ) return line; } );
-                const _arrBookHeaders = _arrBookLines.shift().split( ';' );
+                _arrBookLines.shift().split( ';' );
 
                 const _arrBooksData = _arrBookLines.map( line => {
                     const [ _id, _title, _author, _issuedon ] = line.split( ';' );
                     return new Book( _id, _title, _author, _issuedon );
+                } );
+
+               _arrBooksData.sort( ( a, b ) => {
+                   if ( opt[ 'sortBy' ] === 'id' ) {
+                    return ( a[ opt[ 'sortBy' ] ] - b[ opt[ 'sortBy' ] ] );
+                   } else {
+                    return ( a[ opt[ 'sortBy' ] ].localeCompare( b[ opt[ 'sortBy' ] ] )  ); 
+                   }
                 } );
 
                 resolve( _arrBooksData );
