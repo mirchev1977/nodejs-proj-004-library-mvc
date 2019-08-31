@@ -2,8 +2,8 @@ const express    = require( 'express'             );
 const path       = require( 'path'                );
 const bodyParser = require( 'body-parser'         );
 
-const rootDir    = require( './utilities/rootDir' );
-const bookRoutes = require( './routes/book' );
+const rootDir     = require( './utilities/rootDir' );
+const bookRoutes  = require( './routes/book'       );
 
 const app = express();
 
