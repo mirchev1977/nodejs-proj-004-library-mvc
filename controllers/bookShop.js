@@ -1,3 +1,7 @@
+const modelBook = require( '../models/book' );
+
 module.exports.getAll = ( req, res, next ) => {
-    res.render( 'bookShop/test' );
+    modelBook.promArrBooksData.then( _arrBooksData => {
+        res.render( 'bookShop/getAll', { arrBooksData: _arrBooksData } );
+    } );
 };
