@@ -15,11 +15,11 @@ class Book {
     }
 }
 
-module.exports.loadBookLibrary = function ( opt ) {
+module.exports.loadBookLibrary = function ( path, opt ) {
     let allBooksStr = '';
 
     const promise = new Promise( ( resolve, reject ) => {
-        fs.readFile( './data/books.txt', ( err, data ) => {
+        fs.readFile( path, ( err, data ) => {
             if ( !err ) {
                 allBooksStr += data;
 

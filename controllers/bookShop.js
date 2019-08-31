@@ -2,7 +2,7 @@ const modelBook = require( '../models/book' );
 
 module.exports.getAll = ( req, res, next ) => {
     modelBook
-        .loadBookLibrary( { 
+        .loadBookLibrary( './data/books.txt', { 
             sortBy: ( req.query[ 'sort' ] || 'id' ) 
         } )
         .then( _arrBooksData => {
