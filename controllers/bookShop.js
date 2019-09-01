@@ -22,3 +22,16 @@ module.exports.addToCart = ( req, res, next ) => {
         } );
     } );
 };
+
+module.exports.getAddedToCard = ( req, res, next ) => {
+    modelBook
+        .loadBookLibrary( './data/books.txt', { 
+            sortBy: ( req.query[ 'sort' ] || 'id' ) 
+        } )
+        .then( _arrBooksData => {
+            res.render( 'bookShop/goToCard', { 
+                arrBooksData: _arrBooksData,
+                sortBy: ( req.query[ 'sort' ] || 'id' )
+            } );
+        } );
+};
