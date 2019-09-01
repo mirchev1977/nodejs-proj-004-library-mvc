@@ -1,34 +1,8 @@
-const fs = require( 'fs' );
+const fs         = require( 'fs' );
+const bookModels = require( './bookModels' );
 
-class Book {
-    constructor ( id, title, author, available, issuedon ) {
-        this.id         = id;
-        this.title      = title;
-        this.author     = author;
-        this.available = available;
-
-        this.setIssuedOn( issuedon );
-    }
-
-    setIssuedOn ( date ) {
-        this.issuedon = date;
-    }
-}
-
-class BookAddedToCart extends Book {
-    constructor ( 
-        id          = 0, 
-        title       = '', 
-        author      = '', 
-        available   = 0, 
-        issuedon    = '01.01.1970', 
-        addedToCart = 0 
-    ) {
-        super( id, title, author, available, issuedon );
-        this.addedToCart = addedToCart;
-    }
-}
-module.exports.BookAddedToCart = BookAddedToCart;
+const Book            = bookModels.Book;
+const BookAddedToCart = bookModels.BookAddedToCart;
 
 module.exports.loadBookLibrary = loadBookLibrary;
 function loadBookLibrary ( path, opt ) {
