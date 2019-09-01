@@ -1,4 +1,4 @@
-const modelBook = require( '../models/book' );
+const modelBook = require( '../entities/book' );
 
 module.exports.getAll = ( req, res, next ) => {
     modelBook
