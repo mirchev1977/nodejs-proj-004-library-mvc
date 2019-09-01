@@ -44,6 +44,10 @@ table.all-books {
     padding: 10px 20px;
 }
 
+td.text-center {
+    text-align: center;
+}
+
 form.add-book {
     display: inline-block;
     margin: 0px;

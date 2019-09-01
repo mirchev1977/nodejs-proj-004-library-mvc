@@ -25,7 +25,7 @@ block body
             tr
                 td=book.title
                 td=book.author
-                td=book.available
+                td( class="text-center" )=book.available
                 td=book.issuedon
                 td
                     form.add-book(method="POST" action="/add-to-cart" )
