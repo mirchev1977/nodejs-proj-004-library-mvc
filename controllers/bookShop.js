@@ -14,7 +14,11 @@ module.exports.getAll = ( req, res, next ) => {
 };
 
 module.exports.addToCart = ( req, res, next ) => {
-    modelBook.addToCart( './data/books.txt', req.body ).then( _arrBooksData => {
-        res.redirect( '/?sort=' + req.body[ 'sortBy' ] );
+    modelBook.takeFromAvailable( './data/books.txt', req.body ).then( _BookAvailabilityModified => {
+        modelBook.addToCart( _BookAvailabilityModified ).then( bookWritten => {
+            res.redirect( '/?sort=' + req.body[ 'sortBy' ] );
+        } ).catch( err => {
+            console.log( 'Error: ', err );
+        } );
     } );
 };

@@ -15,6 +15,21 @@ class Book {
     }
 }
 
+class BookAddedToCart extends Book {
+    constructor ( 
+        id          = 0, 
+        title       = '', 
+        author      = '', 
+        available   = 0, 
+        issuedon    = '01.01.1970', 
+        addedToCart = 0 
+    ) {
+        super( id, title, author, available, issuedon );
+        this.addedToCart = addedToCart;
+    }
+}
+module.exports.BookAddedToCart = BookAddedToCart;
+
 module.exports.loadBookLibrary = loadBookLibrary;
 function loadBookLibrary ( path, opt ) {
     let allBooksStr = '';
@@ -82,18 +97,25 @@ function writeBookLibrary ( path, arrBooksData = [] ) {
     return promise;
 }
 
-module.exports.addToCart = addToCart;
-function addToCart( path, body ) {
+module.exports.takeFromAvailable = takeFromAvailable;
+function takeFromAvailable( path, body ) {
     const promise = new Promise( ( resolve, reject ) => {
+        let _BookAvailabilityModified = new BookAddedToCart();
         loadBookLibrary ( path, { sortBy: 'id' } ).then( _arrBooksData => {
             _arrBooksData.forEach(_book => {
                 if ( _book[ 'id' ] === body[ 'id' ] ) {
                     _book[ 'available' ] -= body[ 'amount' ];
+
+                    _BookAvailabilityModified = new BookAddedToCart(
+                        _book[ 'id'        ], _book[ 'title'    ], _book[ 'author' ],
+                        _book[ 'available' ], _book[ 'issuedon' ], 0
+                    );
+                    _BookAvailabilityModified[ 'addedToCart' ] = body[ 'amount' ];
                 }
             });
 
             writeBookLibrary( './data/books.txt', _arrBooksData ).then( _arrBooksData => {
-                resolve( _arrBooksData );
+                resolve( _BookAvailabilityModified );
             } ).catch( err => {
                 reject( err );
             } );
@@ -102,3 +124,22 @@ function addToCart( path, body ) {
 
     return promise;
 };
+
+module.exports.addToCart = addToCart;
+function addToCart ( book = new BookAddedToCart ) {
+    const bookArr = Object.values( book );
+    const bookStr = bookArr.join( ';' ) + "\n";
+
+    const promise = new Promise( ( resolve, reject ) => {
+        fs.appendFile( './data/added_to_cart.txt', bookStr, ( err ) => {
+            if ( err ) {
+                console.log( err );
+                reject( err );
+            }
+        } ) 
+
+        resolve( bookStr );
+    } );
+
+    return promise;
+}
