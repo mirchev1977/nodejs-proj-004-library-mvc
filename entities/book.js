@@ -69,16 +69,41 @@ function takeFromAvailable( path, body ) {
 
 module.exports.addToCart = addToCart;
 function addToCart ( book = new BookAddedToCart ) {
-    const bookArr = Object.values( book );
-    const bookStr = bookArr.join( ';' ) + "\n";
+    let bookStr;
 
     const promise = new Promise( ( resolve, reject ) => {
-        fs.appendFile( './data/added_to_cart.txt', bookStr, ( err ) => {
-            if ( err ) {
-                console.log( err );
-                reject( err );
+        bookModels.readBooksAddedToCard ( './data/added_to_cart.txt' ).then( _booksAlreadyAdded => {
+            let   _bookAlreadyPresent = false;
+            const _arrBookLines = [];
+            _booksAlreadyAdded.forEach( _bookAlreadyAdded => {
+                let _bookArr = Object.values( _bookAlreadyAdded );
+
+                if ( _bookAlreadyAdded[ 'id' ] === book[ 'id' ] ) {
+                    _bookAlreadyPresent = true;
+                    book[ 'addedToCart' ] =  ( book[ 'addedToCart' ] * 1 ) 
+                        + ( _bookAlreadyAdded[ 'addedToCart' ]  * 1);
+                    
+                    _bookArr = Object.values( book );
+                }
+
+                const _bookLine = _bookArr.join( ';' );
+                _arrBookLines.push( _bookLine );
+            } );
+
+            if ( !_bookAlreadyPresent ) {
+                const _bookArr = Object.values( book ); 
+                const _bookLine = _bookArr.join( ';' );
+                _arrBookLines.push( _bookLine );
             }
-        } ) 
+
+            bookStr = _arrBookLines.join( "\n" );
+            fs.writeFile( './data/added_to_cart.txt', bookStr, ( err ) => {
+                if ( err ) {
+                    console.log( err );
+                    reject( err );
+                }
+            } ) 
+        } );
 
         resolve( bookStr );
     } );

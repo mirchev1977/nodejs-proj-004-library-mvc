@@ -67,3 +67,39 @@ function readLibraryBooks ( path, opt ) {
 
     return promise;
 }
+
+module.exports.readBooksAddedToCard = readBooksAddedToCard;
+function readBooksAddedToCard ( path ) {
+    let allBooksStr = '';
+    const promise = new Promise( ( resolve, reject ) => {
+        fs.readFile( path, ( err, data ) => {
+            if ( !err ) {
+                allBooksStr += data;
+
+                const _arrBookLines = allBooksStr.split( /\n/ )
+                    .filter( line => { if ( line ) return line; } );
+
+                let _arrBooksData = _arrBookLines.map( line => {
+                    const [ _id, _title, _author, _available, _issuedon, _addedToCard ] 
+                        = line.split( ';' );
+                    return new BookAddedToCart( 
+                            _id,        _title,    _author, 
+                            _available, _issuedon, _addedToCard 
+                        );
+                } );
+
+               _arrBooksData.sort( ( a, b ) => {
+                   return ( a[ 'id' ] - b[ 'id' ] );
+                } );
+
+                _arrBooksData = _arrBooksData || [];
+                resolve( _arrBooksData );
+                return;
+            }
+
+            reject( err );
+        } );
+    }  );
+
+    return promise;
+}
