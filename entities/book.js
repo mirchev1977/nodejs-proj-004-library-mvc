@@ -98,7 +98,7 @@ function addToCart ( book = new BookAddedToCart ) {
 
             bookStr = _arrBookLines.join( "\n" );
 
-            bookModels.writeBooksToCard( 
+            bookModels.writeBooksToFile( 
                     './data/added_to_cart.txt', 
                     bookStr 
                 ).then( success => {} ).catch( err => reject( err ) ); 
@@ -122,7 +122,7 @@ function discardBooksFromCard ( _arrBooksAddedToCard, _idBookToDiscard ) {
             return _book[ 'id' ] !== _idBookToDiscard;
         } );
 
-        bookModels.writeBooksToCard( './data/added_to_cart.txt', bookModels.bookArrToBookStr( arrBookDiscarded ) )
+        bookModels.writeBooksToFile( './data/added_to_cart.txt', bookModels.bookArrToBookStr( arrBookDiscarded ) )
         .then ( success => {
             const _objBookToDiscard = _arrBooksAddedToCard.filter( _book => {
                 return _book[ 'id' ] === _idBookToDiscard;
@@ -147,7 +147,7 @@ function discardBooksFromCard ( _arrBooksAddedToCard, _idBookToDiscard ) {
                         + "\n"
                         + bookModels.bookArrToBookStr( _arrBooksData );
                 
-                    bookModels.writeBooksToCard(
+                    bookModels.writeBooksToFile(
                             './data/books.txt',
                             booksStr
                         ).then( success => {

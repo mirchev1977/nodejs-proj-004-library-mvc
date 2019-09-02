@@ -118,10 +118,10 @@ function bookArrToBookStr ( _bookArray ) {
     return _arrCardBooksValues.join( "\n" );
 }
 
-module.exports.writeBooksToCard = writeBooksToCard;
-function writeBooksToCard ( path, _strArrCardBooks ) {
+module.exports.writeBooksToFile = writeBooksToFile;
+function writeBooksToFile ( path, _strArrBooks ) {
     const promise = new Promise( ( resolve, reject ) => {
-        fs.writeFile( path, _strArrCardBooks, ( err ) => {
+        fs.writeFile( path, _strArrBooks, ( err ) => {
             if ( err ) {
                 console.log( err );
                 reject( err );
