@@ -34,7 +34,7 @@ block body
                 td( class="text-center" )=book.available
                 td=book.issuedon
                 td
-                    form.add-book(method="POST" action="/add-to-cart" )
+                    form.form__book-shop(method="POST" action="/add-to-cart" )
                         input( type="hidden" name="sortBy" value=sortBy )
                         input( type="hidden" name="id" value=book.id )
                         input.books-amount( type="text" name="amount" placeholder="amount" )

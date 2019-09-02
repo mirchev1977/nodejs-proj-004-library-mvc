@@ -97,12 +97,8 @@ function addToCart ( book = new BookAddedToCart ) {
             }
 
             bookStr = _arrBookLines.join( "\n" );
-            fs.writeFile( './data/added_to_cart.txt', bookStr, ( err ) => {
-                if ( err ) {
-                    console.log( err );
-                    reject( err );
-                }
-            } ) 
+
+            writeBooksToCard( bookStr ).then( success => {} ).catch( err => reject( err ) ); 
         } );
 
         resolve( bookStr );
@@ -114,4 +110,49 @@ function addToCart ( book = new BookAddedToCart ) {
 module.exports.readBooksAddedToCard = readBooksAddedToCard;
 function readBooksAddedToCard ( path ) {
     return bookModels.readBooksAddedToCard( path );
+}
+
+module.exports.discardBooksFromCard = discardBooksFromCard;
+function discardBooksFromCard ( _arrBooksAddedToCard, _idBookToDiscard ) {
+    const promise = new Promise( ( resolve, reject ) => {
+        const arrBookDiscarded = _arrBooksAddedToCard.filter( _book => {
+            return _book[ 'id' ] !== _idBookToDiscard;
+        } );
+
+        writeBooksToCard( bookArrToBookStr( arrBookDiscarded ) )
+        .then ( success => {
+            resolve( arrBookDiscarded );
+        } );
+
+        //const ojbBookToDiscard = _arrBooksAddedToCard.filter( _book => {
+        //    return _book[ 'id' ] === _idBookToDiscard;
+        //} )[ 0 ];
+
+    } );
+
+    return promise;
+}
+
+function bookArrToBookStr ( _bookArray ) {
+    const _arrCardBooksValues = [];
+    _bookArray.forEach( _book => {
+        _arrCardBooksValues.push( Object.values( _book ).join( ';' ) );
+    } );
+
+    return _arrCardBooksValues.join( "\n" );
+}
+
+function writeBooksToCard ( _strArrCardBooks ) {
+    const promise = new Promise( ( resolve, reject ) => {
+        fs.writeFile( './data/added_to_cart.txt', _strArrCardBooks, ( err ) => {
+            if ( err ) {
+                console.log( err );
+                reject( err );
+            }
+
+            resolve( '1' );
+        } ) 
+    } );
+
+    return promise;
 }

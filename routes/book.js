@@ -8,6 +8,7 @@ const router = express.Router();
 router.get(  '/',            contrBookShop.getAll    );
 router.post( '/add-to-cart', contrBookShop.addToCart );
 
-router.get(  '/go-to-card', contrBookShop.getAddedToCard );
+router.get(   '/go-to-card',   contrBookShop.getAddedToCard  );
+router.post(  '/item/discard', contrBookShop.postItemDiscard );
 
 module.exports = router;

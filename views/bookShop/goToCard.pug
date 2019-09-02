@@ -13,7 +13,7 @@ block body
                 th="Title".toUpperCase()
                 th="Author".toUpperCase()
                 th="IssuedOn".toUpperCase()
-                th Amount Added to Card
+                th Added to Card
 
             each book in  arrBooksData
                 tr
@@ -23,6 +23,8 @@ block body
                     td( class="text-center" )
                         span=book.addedToCart 
                         span 
-                        button( type="submit" ) X
+                        form.form__book-shop( method="POST" action="/item/discard" )
+                            input( type="hidden" name="book-id" value=book.id ) 
+                            button( type="submit" ) X
     else
         h1 No Books Added to Card Yet

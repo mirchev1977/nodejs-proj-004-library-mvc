@@ -48,7 +48,7 @@ td.text-center {
     text-align: center;
 }
 
-form.add-book {
+form.form__book-shop {
     display: inline-block;
     margin: 0px;
 }

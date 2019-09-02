@@ -23,10 +23,22 @@ module.exports.addToCart = ( req, res, next ) => {
     } );
 };
 
-module.exports.getAddedToCard = ( req, res, next ) => {
+module.exports.getAddedToCard = getAddedToCard;
+function getAddedToCard ( req, res, next ) {
     entityBook.readBooksAddedToCard( 
         './data/added_to_cart.txt' 
     ).then( _arrBooksAddedToCard => {
         res.render( 'bookShop/goToCard', { arrBooksData: _arrBooksAddedToCard });
+    } );
+};
+
+module.exports.postItemDiscard = ( req, res, next ) => {
+    entityBook.readBooksAddedToCard( 
+        './data/added_to_cart.txt' 
+    ).then( _arrBooksAddedToCard => {
+        entityBook.discardBooksFromCard ( _arrBooksAddedToCard, req.body[ 'book-id' ] )
+        .then( _arrBookDiscarded => {
+            res.render( 'bookShop/goToCard', { arrBooksData: _arrBookDiscarded });
+        } );
     } );
 };
