@@ -1,4 +1,4 @@
-extends ../layouts/bookShop-layout
+extends ../layouts/admin-layout
 
 block header__active-page
     a( href="/")
@@ -27,7 +27,8 @@ block append body
                 a( 
                     href="?sort=issuedon" 
                 )="IssuedOn".toUpperCase()
-            th Add to Cart
+            th Delete
+            th Edit
 
         each book in  arrBooksData
             tr
@@ -36,8 +37,6 @@ block append body
                 td( class="text-center" )=book.available
                 td=book.issuedon
                 td
-                    form.form__book-shop(method="POST" action="/add-to-cart" )
-                        input( type="hidden" name="sortBy" value=sortBy )
-                        input( type="hidden" name="id" value=book.id )
-                        input.books-amount( type="text" name="amount" placeholder="amount" )
-                        button( type="submit" ) Add
+                    a( href="/admin/delete?id=" + book.id ) Delete
+                td
+                    a( href="/admin/edit?id=" + book.id   ) Edit
