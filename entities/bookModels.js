@@ -107,3 +107,29 @@ function readBooksAddedToCard ( path ) {
 
     return promise;
 }
+
+module.exports.bookArrToBookStr = bookArrToBookStr;
+function bookArrToBookStr ( _bookArray ) {
+    const _arrCardBooksValues = [];
+    _bookArray.forEach( _book => {
+        _arrCardBooksValues.push( Object.values( _book ).join( ';' ) );
+    } );
+
+    return _arrCardBooksValues.join( "\n" );
+}
+
+module.exports.writeBooksToCard = writeBooksToCard;
+function writeBooksToCard ( _strArrCardBooks ) {
+    const promise = new Promise( ( resolve, reject ) => {
+        fs.writeFile( './data/added_to_cart.txt', _strArrCardBooks, ( err ) => {
+            if ( err ) {
+                console.log( err );
+                reject( err );
+            }
+
+            resolve( '1' );
+        } ) 
+    } );
+
+    return promise;
+}

@@ -98,7 +98,7 @@ function addToCart ( book = new BookAddedToCart ) {
 
             bookStr = _arrBookLines.join( "\n" );
 
-            writeBooksToCard( bookStr ).then( success => {} ).catch( err => reject( err ) ); 
+            bookModels.writeBooksToCard( bookStr ).then( success => {} ).catch( err => reject( err ) ); 
         } );
 
         resolve( bookStr );
@@ -119,39 +119,30 @@ function discardBooksFromCard ( _arrBooksAddedToCard, _idBookToDiscard ) {
             return _book[ 'id' ] !== _idBookToDiscard;
         } );
 
-        writeBooksToCard( bookArrToBookStr( arrBookDiscarded ) )
+        bookModels.writeBooksToCard( bookModels.bookArrToBookStr( arrBookDiscarded ) )
         .then ( success => {
-            resolve( arrBookDiscarded );
-        } );
-
-        //const ojbBookToDiscard = _arrBooksAddedToCard.filter( _book => {
-        //    return _book[ 'id' ] === _idBookToDiscard;
-        //} )[ 0 ];
-
-    } );
-
-    return promise;
-}
-
-function bookArrToBookStr ( _bookArray ) {
-    const _arrCardBooksValues = [];
-    _bookArray.forEach( _book => {
-        _arrCardBooksValues.push( Object.values( _book ).join( ';' ) );
-    } );
-
-    return _arrCardBooksValues.join( "\n" );
-}
-
-function writeBooksToCard ( _strArrCardBooks ) {
-    const promise = new Promise( ( resolve, reject ) => {
-        fs.writeFile( './data/added_to_cart.txt', _strArrCardBooks, ( err ) => {
-            if ( err ) {
-                console.log( err );
-                reject( err );
-            }
-
-            resolve( '1' );
-        } ) 
+            const _objBookToDiscard = _arrBooksAddedToCard.filter( _book => {
+                return _book[ 'id' ] === _idBookToDiscard;
+            } )[ 0 ];
+            const _bookDiscarded = new Book(
+                _objBookToDiscard[ 'id'             ],
+                _objBookToDiscard[ 'title'          ],
+                _objBookToDiscard[ 'author'         ],
+                _objBookToDiscard[ 'availableTotal' ],
+                _objBookToDiscard[ 'issuedon'       ]
+            );
+            bookModels.readLibraryBooks ( './data/books.txt', { sortBy: 'id' } ).then( _arrBooksData => {
+                _arrBooksData.forEach( ( _book, i ) => {
+                    if ( _book[ 'id' ] === _bookDiscarded[ 'id' ] ) {
+                        _arrBooksData[ i ] = _bookDiscarded;
+                    }
+                } );
+                bookModels.bookArrToBookStr( _arrBooksData );
+                debugger;
+            } );
+        } ).then( () => {
+            resolve( arrBookDiscarded ); 
+        } ); 
     } );
 
     return promise;
