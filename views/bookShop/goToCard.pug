@@ -9,33 +9,17 @@ block header__active-page
 block body
     table.all-books
         tr
-            th
-                a( 
-                    href="?sort=title" 
-                )="Title".toUpperCase()
-            th
-                a( 
-                    href="?sort=author" 
-                )="Author".toUpperCase()
-            th
-                a( 
-                    href="?sort=available" 
-                )="Available".toUpperCase()
-            th
-                a( 
-                    href="?sort=issuedon" 
-                )="IssuedOn".toUpperCase()
-            th Add to Cart
+            th="Title".toUpperCase()
+            th="Author".toUpperCase()
+            th="IssuedOn".toUpperCase()
+            th Amount Added to Card
 
         each book in  arrBooksData
             tr
                 td=book.title
                 td=book.author
-                td( class="text-center" )=book.available
                 td=book.issuedon
-                td
-                    form.add-book(method="POST" action="/add-to-cart" )
-                        input( type="hidden" name="sortBy" value=sortBy )
-                        input( type="hidden" name="id" value=book.id )
-                        input.books-amount( type="text" name="amount" placeholder="amount" )
-                        button( type="submit" ) Add
+                td( class="text-center" )
+                    span=book.addedToCart 
+                    span 
+                    button( type="submit" ) X

@@ -1,7 +1,7 @@
-const modelBook = require( '../entities/book' );
+const entityBook = require( '../entities/book' );
 
 module.exports.getAll = ( req, res, next ) => {
-    modelBook
+    entityBook
         .loadBookLibrary( './data/books.txt', { 
             sortBy: ( req.query[ 'sort' ] || 'id' ) 
         } )
@@ -14,8 +14,8 @@ module.exports.getAll = ( req, res, next ) => {
 };
 
 module.exports.addToCart = ( req, res, next ) => {
-    modelBook.takeFromAvailable( './data/books.txt', req.body ).then( _BookAvailabilityModified => {
-        modelBook.addToCart( _BookAvailabilityModified ).then( bookWritten => {
+    entityBook.takeFromAvailable( './data/books.txt', req.body ).then( _BookAvailabilityModified => {
+        entityBook.addToCart( _BookAvailabilityModified ).then( bookWritten => {
             res.redirect( '/?sort=' + req.body[ 'sortBy' ] );
         } ).catch( err => {
             console.log( 'Error: ', err );
@@ -24,14 +24,9 @@ module.exports.addToCart = ( req, res, next ) => {
 };
 
 module.exports.getAddedToCard = ( req, res, next ) => {
-    modelBook
-        .loadBookLibrary( './data/books.txt', { 
-            sortBy: ( req.query[ 'sort' ] || 'id' ) 
-        } )
-        .then( _arrBooksData => {
-            res.render( 'bookShop/goToCard', { 
-                arrBooksData: _arrBooksData,
-                sortBy: ( req.query[ 'sort' ] || 'id' )
-            } );
-        } );
+    entityBook.readBooksAddedToCard( 
+        './data/added_to_cart.txt' 
+    ).then( _arrBooksAddedToCard => {
+        res.render( 'bookShop/goToCard', { arrBooksData: _arrBooksAddedToCard });
+    } );
 };

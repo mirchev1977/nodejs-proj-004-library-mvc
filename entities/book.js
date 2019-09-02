@@ -110,3 +110,8 @@ function addToCart ( book = new BookAddedToCart ) {
 
     return promise;
 }
+
+module.exports.readBooksAddedToCard = readBooksAddedToCard;
+function readBooksAddedToCard ( path ) {
+    return bookModels.readBooksAddedToCard( path );
+}

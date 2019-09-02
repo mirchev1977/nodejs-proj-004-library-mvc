@@ -26,7 +26,11 @@ class BookAddedToCart extends Book {
         addedToCart = 0 
     ) {
         super( id, title, author, available, issuedon );
+
         this.addedToCart = addedToCart;
+        this.availableTotal 
+            = ( this.available * 1 ) 
+                + ( this.addedToCart * 1 );
     }
 }
 module.exports.BookAddedToCart = BookAddedToCart;
@@ -88,7 +92,7 @@ function readBooksAddedToCard ( path ) {
                         );
                 } );
 
-               _arrBooksData.sort( ( a, b ) => {
+                _arrBooksData.sort( ( a, b ) => {
                    return ( a[ 'id' ] - b[ 'id' ] );
                 } );
 
