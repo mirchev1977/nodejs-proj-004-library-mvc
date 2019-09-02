@@ -98,7 +98,10 @@ function addToCart ( book = new BookAddedToCart ) {
 
             bookStr = _arrBookLines.join( "\n" );
 
-            bookModels.writeBooksToCard( bookStr ).then( success => {} ).catch( err => reject( err ) ); 
+            bookModels.writeBooksToCard( 
+                    './data/added_to_cart.txt', 
+                    bookStr 
+                ).then( success => {} ).catch( err => reject( err ) ); 
         } );
 
         resolve( bookStr );
@@ -119,7 +122,7 @@ function discardBooksFromCard ( _arrBooksAddedToCard, _idBookToDiscard ) {
             return _book[ 'id' ] !== _idBookToDiscard;
         } );
 
-        bookModels.writeBooksToCard( bookModels.bookArrToBookStr( arrBookDiscarded ) )
+        bookModels.writeBooksToCard( './data/added_to_cart.txt', bookModels.bookArrToBookStr( arrBookDiscarded ) )
         .then ( success => {
             const _objBookToDiscard = _arrBooksAddedToCard.filter( _book => {
                 return _book[ 'id' ] === _idBookToDiscard;
@@ -131,16 +134,30 @@ function discardBooksFromCard ( _arrBooksAddedToCard, _idBookToDiscard ) {
                 _objBookToDiscard[ 'availableTotal' ],
                 _objBookToDiscard[ 'issuedon'       ]
             );
-            bookModels.readLibraryBooks ( './data/books.txt', { sortBy: 'id' } ).then( _arrBooksData => {
-                _arrBooksData.forEach( ( _book, i ) => {
-                    if ( _book[ 'id' ] === _bookDiscarded[ 'id' ] ) {
-                        _arrBooksData[ i ] = _bookDiscarded;
-                    }
-                } );
-                bookModels.bookArrToBookStr( _arrBooksData );
-                debugger;
+
+            const promise = new Promise( ( resolve, reject ) => {
+                bookModels.readLibraryBooks ( './data/books.txt', { sortBy: 'id' } ).then( _arrBooksData => {
+                    _arrBooksData.forEach( ( _book, i ) => {
+                        if ( _book[ 'id' ] === _bookDiscarded[ 'id' ] ) {
+                            _arrBooksData[ i ] = _bookDiscarded;
+                        }
+                    } );
+
+                    const booksStr = 'id;title;author;available;issuedon' 
+                        + "\n"
+                        + bookModels.bookArrToBookStr( _arrBooksData );
+                
+                    bookModels.writeBooksToCard(
+                            './data/books.txt',
+                            booksStr
+                        ).then( success => {
+                            resolve( success );
+                        } );
+                } ); 
             } );
-        } ).then( () => {
+
+            return promise;
+        } ).then( success => {
             resolve( arrBookDiscarded ); 
         } ); 
     } );

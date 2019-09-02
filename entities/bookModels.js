@@ -119,9 +119,9 @@ function bookArrToBookStr ( _bookArray ) {
 }
 
 module.exports.writeBooksToCard = writeBooksToCard;
-function writeBooksToCard ( _strArrCardBooks ) {
+function writeBooksToCard ( path, _strArrCardBooks ) {
     const promise = new Promise( ( resolve, reject ) => {
-        fs.writeFile( './data/added_to_cart.txt', _strArrCardBooks, ( err ) => {
+        fs.writeFile( path, _strArrCardBooks, ( err ) => {
             if ( err ) {
                 console.log( err );
                 reject( err );
