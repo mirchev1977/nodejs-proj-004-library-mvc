@@ -1,12 +1,12 @@
 extends ../layouts/admin-layout
 
 block header__active-page
-    a( href="/")
-        li Home
     a( href="/admin/all-books")
         li( class="active" ) Admin
     a( href="/admin/new-book")
         li New Book
+    a( href="/")
+        li Home
 
 block append body
     table.all-books
