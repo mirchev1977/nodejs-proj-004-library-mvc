@@ -22,6 +22,7 @@ module.exports.postNewBook = ( req, res, next ) => {
     entityBook.getBooksLastId( 
             './data/booksLastId.txt' 
         ).then( lastId => {
+            lastId++;
             return entityBook.appendNewBook( 
                 './data/books.txt',
                 lastId, 
@@ -29,8 +30,10 @@ module.exports.postNewBook = ( req, res, next ) => {
                 req.body[ 'book-author'    ],
                 req.body[ 'book-available' ],
                 req.body[ 'book-issuedon'  ],
-            );
-        } ).then( ( success ) => {
+            ).then( success => {
+                return entityBook.writeIncreasedLastId( lastId );
+            } );
+        } ).then( _increasedId => {
             getAll( req, res, next ); 
         } ); 
 };

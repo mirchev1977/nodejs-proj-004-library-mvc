@@ -185,6 +185,23 @@ function getBooksLastId ( path ) {
     return promise;
 }
 
+module.exports.writeIncreasedLastId = writeIncreasedLastId;
+function writeIncreasedLastId ( _idIncreased ) {
+
+    const promise = new Promise( ( resolve, reject ) => {
+        fs.writeFile( './data/booksLastId.txt', _idIncreased, ( err ) => {
+            if ( err ) {
+                console.log( err );
+                reject( err );
+            }
+
+            resolve( _idIncreased );
+        } );
+    } );
+
+    return promise;
+}
+
 module.exports.appendNewBook = appendNewBook;
 function appendNewBook ( path, _id, _title, _author, _available, _issuedon ) {
     const _strBookDetails = [
