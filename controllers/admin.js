@@ -12,3 +12,7 @@ module.exports.getAll = ( req, res, next ) => {
             } );
         } );
 };
+
+module.exports.postNewBook = ( req, res, next ) => {
+    res.render( 'admin/new-book' );
+};

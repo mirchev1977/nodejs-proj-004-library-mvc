@@ -1,0 +1,12 @@
+extends ../layouts/admin-layout
+
+block header__active-page
+    a( href="/")
+        li Home
+    a( href="/admin/all-books")
+        li Admin
+    a( href="/admin/new-book")
+        li( class="active" ) New Book
+
+block append body
+    h1 Entering New Book Here...
