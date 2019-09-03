@@ -1,6 +1,7 @@
 const entityBook = require( '../entities/book' );
 
-module.exports.getAll = ( req, res, next ) => {
+module.exports.getAll = getAll;
+function getAll ( req, res, next ) {
     entityBook
         .loadBookLibrary( './data/books.txt', { 
             sortBy: ( req.query[ 'sort' ] || 'id' ) 
@@ -11,8 +12,25 @@ module.exports.getAll = ( req, res, next ) => {
                 sortBy: ( req.query[ 'sort' ] || 'id' )
             } );
         } );
+}
+
+module.exports.getNewBook = ( req, res, next ) => {
+    res.render( 'admin/new-book' );
 };
 
 module.exports.postNewBook = ( req, res, next ) => {
-    res.render( 'admin/new-book' );
+    entityBook.getBooksLastId( 
+            './data/booksLastId.txt' 
+        ).then( lastId => {
+            return entityBook.appendNewBook( 
+                './data/books.txt',
+                lastId, 
+                req.body[ 'book-title'     ],
+                req.body[ 'book-author'    ],
+                req.body[ 'book-available' ],
+                req.body[ 'book-issuedon'  ],
+            );
+        } ).then( ( success ) => {
+            getAll( req, res, next ); 
+        } ); 
 };

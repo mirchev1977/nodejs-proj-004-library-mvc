@@ -56,3 +56,39 @@ form.form__book-shop {
 .books-amount {
     width: 50px;
 }
+
+form.new-book {
+    width: 500px;
+}
+
+.new-book__row {
+    padding: 10px 20px;
+}
+
+.new-book__row label {
+    width: 120px;
+    display: inline-block;
+}
+
+.new-book__row input {
+    height: 35px;
+    width: 300px;
+}
+
+.new-book__row__button {
+    text-align: right;
+}
+
+.new-book__row button {
+    width:  40%;
+    height: 35px;
+    margin-right: 40px;
+}
+
+.error-message {
+    text-align: center;
+    color: red;
+    font-weight: bold;
+    padding: 30px;
+    display: none;
+}

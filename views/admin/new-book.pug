@@ -9,4 +9,26 @@ block header__active-page
         li( class="active" ) New Book
 
 block append body
-    h1 Entering New Book Here...
+    div.error-message#error-message
+    form( method="POST" action="/admin/new-book" id="new-book" class="new-book" )
+        div( class="new-book__row" )
+            label( for="new-book__book-title" ) Book Title
+            input( type="text" name="book-title" id="new-book__book-title" )
+        div( class="new-book__row" )
+            label( for="new-book__book-author" ) Book Author
+            input( type="text" name="book-author" id="new-book__book-author" )
+        div( class="new-book__row" )
+            label( for="new-book__book-available" ) Available
+            input( type="text" name="book-available" id="new-book__book-available" )
+        div( class="new-book__row" )
+            label( for="new-book__book-issuedon" ) Book Issued On
+            input( 
+                    type="text" 
+                    name="book-issuedon" 
+                    id="new-book__book-issuedon" 
+                    placeholder="dd.mm.yyyy" 
+                )
+        div( class="new-book__row new-book__row__button" )
+            button( type="submit" ) New Book
+    
+    script( src="/scripts/new-book.js" )

@@ -164,3 +164,43 @@ function discardBooksFromCard ( _arrBooksAddedToCard, _idBookToDiscard ) {
 
     return promise;
 }
+
+module.exports.getBooksLastId = getBooksLastId;
+function getBooksLastId ( path ) {
+    let fileStr = '';
+    const promise = new Promise( ( resolve, reject ) => {
+        fs.readFile( path, ( err, data ) => {
+            if ( err ) {
+                reject( err );
+                return;
+            }
+            fileStr += data;
+
+            fileStr = fileStr.trim();
+
+            resolve( fileStr );
+        } ); 
+    } );
+
+    return promise;
+}
+
+module.exports.appendNewBook = appendNewBook;
+function appendNewBook ( path, _id, _title, _author, _available, _issuedon ) {
+    const _strBookDetails = [
+        _id, _title, _author, _available, _issuedon
+    ].join( ';' ) + "\n";
+
+    const promise = new Promise( ( resolve, reject ) => {
+        fs.appendFile( path, _strBookDetails, err => {
+            if ( err ) {
+                reject( err );
+                return;
+            }
+
+            resolve( true );
+        } );
+    } );
+
+    return promise;
+}
