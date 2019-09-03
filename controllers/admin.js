@@ -37,3 +37,11 @@ module.exports.postNewBook = ( req, res, next ) => {
             getAll( req, res, next ); 
         } ); 
 };
+
+module.exports.deleteBook = ( req, res, next ) => {
+    const _bookId = req.query[ 'id' ];
+
+    entityBook.deleteBook( _bookId ).then( _bookId => {
+        res.redirect( '/admin/all-books' );
+    } );
+};

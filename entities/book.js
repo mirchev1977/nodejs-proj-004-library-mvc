@@ -221,3 +221,26 @@ function appendNewBook ( path, _id, _title, _author, _available, _issuedon ) {
 
     return promise;
 }
+
+module.exports.deleteBook = deleteBook;
+function deleteBook ( _bookId ) {
+    const promise = new Promise( ( resolve, reject ) => {
+        loadBookLibrary ( './data/books.txt', { sortBy: 'id' } ).then( _arrBooks => {
+            const _booksFiltered = _arrBooks.filter( _book => {
+                return _book[ 'id' ] !== _bookId;
+            } );
+
+            const _strBooks = "id;title;author;available;issuedon\n"
+                + bookModels.bookArrToBookStr( _booksFiltered )
+            bookModels.writeBooksToFile( 
+                './data/books.txt', 
+                _strBooks
+             ).then( success => {
+                resolve( _bookId );
+             } );
+
+        } );
+
+    } );
+    return promise;
+}

@@ -7,6 +7,3 @@ id;title;author;available;issuedon
 6;Nature of Statistical Learning Theory The;Vapnik, Vladimir;33;22.12.2015
 7;Integration of the Indian States;Menon, V P;88;22.12.2016
 8;Drunkard's Walk, The;Mlodinow, Leonard;27;22.12.2017
-9;One;One;58;02.03.2018
-10;Two;Two;50;05.05.2005
-11;Three;Three;33;15.05.2016
