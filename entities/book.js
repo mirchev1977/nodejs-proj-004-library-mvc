@@ -13,9 +13,20 @@ module.exports.editBook = editBook;
 function editBook ( _bookBody ) {
     const promise = new Promise( ( resolve, reject ) => {
         loadBookLibrary( './data/books.txt', { sortBy: 'id' } ).then( _arrBooksData => {
-            debugger;
-            resolve( _bookBody );
-        } )
+            _arrBooksData.forEach( ( _book, _i ) => {
+                if ( _bookBody[ 'book-id' ] === _book[ 'id' ] ) {
+                    _book[ 'title'     ] = _bookBody[ 'book-title'     ];
+                    _book[ 'author'    ] = _bookBody[ 'book-author'    ];
+                    _book[ 'available' ] = _bookBody[ 'book-available' ];
+                    _book[ 'issuedon'  ] = _bookBody[ 'book-issuedon'  ];
+                }
+            } );
+            return _arrBooksData;
+        } ).then( _arrBooksData => {
+            return writeBookLibrary( './data/books.txt', _arrBooksData );
+        } ).then( _arrBooksData => {
+            resolve( _arrBooksData );
+        } );
     } );
     return promise;
 }
