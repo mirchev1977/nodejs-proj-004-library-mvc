@@ -38,10 +38,34 @@ module.exports.postNewBook = ( req, res, next ) => {
         } ); 
 };
 
-module.exports.deleteBook = ( req, res, next ) => {
+module.exports.getDeleteBook = ( req, res, next ) => {
     const _bookId = req.query[ 'id' ];
 
     entityBook.deleteBook( _bookId ).then( _bookId => {
-        res.redirect( '/admin/all-books' );
+        res.redirect( `/admin/all-books?sort=` + req.query[ 'sort' ] );
     } );
 };
+
+module.exports.getEditBook = ( req, res, next ) => {
+    const _bookId        = req.query[ 'id'          ];
+    const _bookTitle     = req.query[ 'title'       ];
+    const _bookAuthor    = req.query[ 'author'      ];
+    const _bookAvail     = req.query[ 'available'   ];
+    const _bookIssuedOn  = req.query[ 'issuedon'    ];
+    const _sortBy        = req.query[ 'sort'        ];
+
+    res.render( `admin/edit-book.pug`, { book: {
+        id:        _bookId,
+        title:     _bookTitle,
+        author:    _bookAuthor,
+        available: _bookAvail,
+        issuedon:  _bookIssuedOn,
+        sortBy:    _sortBy
+    } } );
+};
+
+module.exports.postEditBook = ( req, res, next ) => {
+    entityBook.editBook( req.body ).then( _bookBody => {
+        res.redirect( `/admin/all-books?sort=` + req.body[ 'book-sort' ] );
+    } );
+}

@@ -37,6 +37,11 @@ block append body
                 td( class="text-center" )=book.available
                 td=book.issuedon
                 td
-                    a( href="/admin/delete?id=" + book.id ) Delete
+                    a( 
+                        href=`/admin/delete?id=${book.id}&sort=${sortBy}`
+                    ) Delete
                 td
-                    a( href="/admin/edit?id=" + book.id   ) Edit
+                    a( 
+                        href=`/admin/edit?id=${book.id}&title=${book.title}&author=${book.author}
+&available=${book.available}&issuedon=${book.issuedon}&sort=${sortBy}`
+                    ) Edit

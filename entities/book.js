@@ -9,6 +9,17 @@ function loadBookLibrary ( path, opt ) {
     return bookModels.readLibraryBooks( path, opt );
 }
 
+module.exports.editBook = editBook;
+function editBook ( _bookBody ) {
+    const promise = new Promise( ( resolve, reject ) => {
+        loadBookLibrary( './data/books.txt', { sortBy: 'id' } ).then( _arrBooksData => {
+            debugger;
+            resolve( _bookBody );
+        } )
+    } );
+    return promise;
+}
+
 module.exports.writeBookLibrary = writeBookLibrary;
 function writeBookLibrary ( path, arrBooksData = [] ) {
     const promise = new Promise( ( resolve, reject ) => {

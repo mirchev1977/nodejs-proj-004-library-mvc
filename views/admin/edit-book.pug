@@ -1,0 +1,36 @@
+extends ../layouts/admin-layout
+
+block header__active-page
+    a( href="/admin/all-books")
+        li Admin
+
+block append body
+    div.error-message#error-message
+    form( method="POST" action="/admin/edit" id="new-book" class="new-book" )
+        div( class="new-book__row" )
+            label( for="new-book__book-title" ) Book Title
+            input( type="text" name="book-title" id="new-book__book-title" 
+                value=`${book.title}` )
+        div( class="new-book__row" )
+            label( for="new-book__book-author" ) Book Author
+            input( type="text" name="book-author" id="new-book__book-author" 
+                value=`${book.author}` )
+        div( class="new-book__row" )
+            label( for="new-book__book-available" ) Available
+            input( type="text" name="book-available" id="new-book__book-available" 
+                value=`${book.available}` )
+        div( class="new-book__row" )
+            label( for="new-book__book-issuedon" ) Book Issued On
+            input( 
+                    type="text" 
+                    name="book-issuedon" 
+                    id="new-book__book-issuedon" 
+                    placeholder="dd.mm.yyyy" 
+                    value=`${book.issuedon}`
+                )
+            input( type="hidden" name="book-id"   value=`${book.id}` )
+            input( type="hidden" name="book-sort" value=`${book.sortBy}` )
+        div( class="new-book__row new-book__row__button" )
+            button( type="submit" ) Save
+    
+    script( src="/scripts/new-book.js" )
