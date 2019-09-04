@@ -9,6 +9,7 @@ block header__active-page
         li Admin
 
 block append body
+    div.error-message#error-message
     table.all-books
         tr
             th
@@ -33,11 +34,13 @@ block append body
             tr
                 td=book.title
                 td=book.author
-                td( class="text-center" )=book.available
+                td( class="text-center" id="available-amount" )=book.available
                 td=book.issuedon
                 td
-                    form.form__book-shop(method="POST" action="/add-to-cart" )
+                    form.form__book-shop#form__book-shop(method="POST" action="/add-to-cart" )
                         input( type="hidden" name="sortBy" value=sortBy )
                         input( type="hidden" name="id" value=book.id )
-                        input.books-amount( type="text" name="amount" placeholder="amount" )
+                        input.books-amount( type="text" name="amount" id="loan-amount" placeholder="amount" )
                         button( type="submit" ) Add
+
+    script( src="/scripts/availability.js" )
