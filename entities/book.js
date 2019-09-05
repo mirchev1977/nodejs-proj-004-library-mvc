@@ -266,3 +266,20 @@ function deleteBook ( _bookId ) {
     } );
     return promise;
 }
+
+module.exports.emptyCard = emptyCard;
+function emptyCard () {
+
+    const promise = new Promise( ( resolve, reject ) => {
+        fs.writeFile( './data/added_to_cart.txt', '', err => {
+            if ( err ) {
+                reject( err );
+            }
+
+            resolve( 'ok' );
+        } );
+
+    } );
+
+    return promise;
+}

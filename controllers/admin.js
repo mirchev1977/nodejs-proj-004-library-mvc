@@ -81,6 +81,8 @@ module.exports.getRestore = ( req, res, next ) => {
         } ).then( _lastId => {
             return entityBook.writeIncreasedLastId( _lastId );
         } ).then( _success => {
+            return entityBook.emptyCard();
+        } ).then( _success => {
             res.redirect( `/admin/all-books?sort=id` );
         } );
 };
