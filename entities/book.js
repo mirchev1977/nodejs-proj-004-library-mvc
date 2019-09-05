@@ -46,7 +46,7 @@ function writeBookLibrary ( path, arrBooksData = [] ) {
             _arrBookLines.push( _bookArr.join( ';' ) );
         } );
 
-        const _strBookLines = _arrBookLines.join( "\n" );
+        const _strBookLines = _arrBookLines.join( "\n" ) + "\n";
 
         fs.writeFile( path, _strBookLines, ( err ) => {
             if ( err ) {

@@ -15,4 +15,6 @@ router.get( '/delete', contrAdmin.getDeleteBook );
 router.get(  '/edit',   contrAdmin.getEditBook    );
 router.post( '/edit',   contrAdmin.postEditBook   );
 
+router.get( '/restore', contrAdmin.getRestore     );
+
 module.exports = router;

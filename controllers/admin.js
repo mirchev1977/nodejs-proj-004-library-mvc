@@ -69,3 +69,18 @@ module.exports.postEditBook = ( req, res, next ) => {
         res.redirect( `/admin/all-books?sort=` + req.body[ 'book-sort' ] );
     } );
 }
+
+module.exports.getRestore = ( req, res, next ) => {
+    entityBook.loadBookLibrary ( 
+            './data/books_template.txt', 
+            { sortBy: 'id' } 
+        ).then( _arrBooksData => {
+            return entityBook.writeBookLibrary( './data/books.txt', _arrBooksData );
+        } ).then( _result => {
+            return entityBook.getBooksLastId( './data/booksLastId_template.txt' );
+        } ).then( _lastId => {
+            return entityBook.writeIncreasedLastId( _lastId );
+        } ).then( _success => {
+            res.redirect( `/admin/all-books?sort=id` );
+        } );
+};
