@@ -18,4 +18,8 @@ app.use( bodyParser.urlencoded( { extended: false } )     );
 app.use( '/',      bookRoutes  );
 app.use( '/admin', adminRoutes );
 
+app.use( ( req, res, next ) => {
+    res.render( '404.pug' );
+} );
+
 app.listen( process.env.PORT || 3000 );
