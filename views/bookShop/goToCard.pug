@@ -4,7 +4,7 @@ block header__active-page
     a( href="/")
         li Home
     a( href="/go-to-card")
-        li( class="active" ) Go To Card
+        li( class="active" ) Go To Cart
 
 block append body
     if arrBooksData.length > 0
@@ -13,7 +13,7 @@ block append body
                 th="Title".toUpperCase()
                 th="Author".toUpperCase()
                 th="IssuedOn".toUpperCase()
-                th Added to Card
+                th Added to Cart
 
             each book in  arrBooksData
                 tr
@@ -27,4 +27,4 @@ block append body
                             input( type="hidden" name="book-id" value=book.id ) 
                             button( type="submit" ) X
     else
-        h1 No Books Added to Card Yet
+        h1 No Books Added to Cart Yet
