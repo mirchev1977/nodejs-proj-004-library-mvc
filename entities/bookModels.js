@@ -56,6 +56,13 @@ function readLibraryBooks ( path, opt ) {
                _arrBooksData.sort( ( a, b ) => {
                    if ( opt[ 'sortBy' ].match( /id|available/ ) ) {
                     return ( a[ opt[ 'sortBy' ] ] - b[ opt[ 'sortBy' ] ] );
+                   } else if ( opt[ 'sortBy' ].match( /issuedon/ ) ) {
+                       const [ aDay, aMonth, aYear ] = a.issuedon.split( /\./ );
+                       const aTime = new Date( aYear, aMonth, aDay ).getTime();
+                       const [ bDay, bMonth, bYear ] = b.issuedon.split( /\./ );
+                       const bTime = new Date( bYear, bMonth, bDay ).getTime();
+
+                       return aTime - bTime;
                    } else {
                     return ( a[ opt[ 'sortBy' ] ].localeCompare( b[ opt[ 'sortBy' ] ] )  ); 
                    }
